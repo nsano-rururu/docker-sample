@@ -1,3 +1,9 @@
+# Version
+
+|Elasticsearch|Kibana|ElastAlert|MariaDB|
+|:-----------:|:----:|:--------:|:-----:|
+|7.6.1        |7.6.1 |0.2.1     |10.4.12|
+
 # 準備
 
     mkdir -p elastalert/rule_templates
