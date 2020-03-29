@@ -1,3 +1,9 @@
+# Version
+
+|MariaDB|
+|:-----:|
+|10.4.12|
+
 # 動作確認
 
     $ docker-compose up -d
