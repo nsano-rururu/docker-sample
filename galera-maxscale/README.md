@@ -1,3 +1,9 @@
+# Version
+
+|MariaDB|Maxscale|
+|:-----:|:-----:|
+|10.4.12|2.4.2|
+
 # 動作確認
 
     $ cd dockerfiles
