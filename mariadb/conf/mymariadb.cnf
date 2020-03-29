@@ -1,0 +1,14 @@
+[mysqld]
+character-set-server=utf8mb4
+collation-server=utf8mb4_general_ci
+innodb_ft_min_token_size=1
+log_output=FILE
+general_log=1
+general_log_file=/var/log/mysql/general.log
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow_query.log
+long_query_time=10
+log_error=/var/log/mysql/error.log
+
+[client-mariadb]
+default-character-set=utf8mb4
