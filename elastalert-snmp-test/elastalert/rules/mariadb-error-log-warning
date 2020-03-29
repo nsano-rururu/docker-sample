@@ -1,0 +1,19 @@
+name: mariadb-error-log-warning
+type: frequency
+index: mariadb-*
+num_events: 1
+timeframe:
+    minutes: 5
+realert:
+  minutes: 1
+filter:
+  - query:
+      query_string:
+        query: '@log_name:mysqld.error AND message:Warning'
+alert:
+  - command
+command: ["/usr/bin/snmptrap", "-IR", "-v", "2c", "-c", "public", "xx.xx.xx.xx:162", "", "netSnmp.99999", "netSnmp.99999.1", "s", "Hello, World"]
+is_enabled: true
+timestamp_field: '@timestamp'
+timestamp_type: iso
+use_strftime_index: false
