@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  node-1:
+    build:
+      context: ./dockerfiles
+      dockerfile: cluster
+    ports:
+      - "4001:3306"
+    command: sudo -u mysql mysqld --wsrep-new-cluster
+
+  node-2:
+    build:
+      context: ./dockerfiles
+      dockerfile: cluster
+    ports:
+      - "4002:3306"
+    links:
+      - node-1
+    command: sudo -u mysql mysqld
+
+  node-3:
+    build:
+      context: ./dockerfiles
+      dockerfile: cluster
+    ports:
+      - "4003:3306"
+    links:
+      - node-1
+    command: sudo -u mysql mysqld
