@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  mariadb:
+    container_name: mariadb
+    hostname: mariadb
+    image: mariadb:10.4.10
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+    env_file:
+      - ./.mariadb.env
+  phpmyadmin:
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    image: phpmyadmin/phpmyadmin:5
+    env_file:
+      - ./.phpadmin.env
+    depends_on:
+      - mariadb
+    ports:
+      - 4040:80
+    volumes:
+      - ./phpmyadmin/sessions:/sessions
