@@ -1,3 +1,9 @@
+# Version
+
+|phpMyAdmin|MariaDB|
+|:-----:|:-----:|
+|5 |10.4.10|
+
 # 準備
 
     mkdir -p mariadb/data
