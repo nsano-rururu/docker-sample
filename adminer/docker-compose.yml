@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  adminer:
+    container_name: adminer
+    hostname: adminer
+    image: adminer:4.7.5
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  db:
+    container_name: mariadb
+    hostname: mariadb
+    image: mariadb:10.4.11
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=sample
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
