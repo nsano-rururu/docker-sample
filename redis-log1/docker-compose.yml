@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  redis:
+    container_name: redis
+    build: ./redis-build
+    ports:
+      - 6379:6379
+    command: redis-server --logfile /var/log/redis/redis.log
+    volumes:
+      - ./log:/var/log/redis
