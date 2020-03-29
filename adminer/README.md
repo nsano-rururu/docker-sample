@@ -1,3 +1,9 @@
+# Version
+
+|Adminer|MariaDB|
+|:-----:|:-----:|
+|4.7.5 |10.4.11|
+
 # 準備
 
     mkdir -p ./mariadb/data
