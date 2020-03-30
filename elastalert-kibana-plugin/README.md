@@ -32,6 +32,6 @@
     docker ps
 
     CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS                   PORTS                                            NAMES
-c6da9f9a0839        bitsensor/elastalert:3.0.0-beta.0                     "npm start"              5 minutes ago       Up 5 minutes (healthy)   0.0.0.0:3030->3030/tcp, 0.0.0.0:3333->3333/tcp   elastalert
-748f0caecbd1        docker.elastic.co/kibana/kibana:7.5.2                 "/usr/local/bin/dumb…"   5 minutes ago       Up 5 minutes (healthy)   0.0.0.0:5601->5601/tcp                           kibana
-5a9d9f34faf3        docker.elastic.co/elasticsearch/elasticsearch:7.5.2   "/usr/local/bin/dock…"   5 minutes ago       Up 5 minutes (healthy)   0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   elasticsearch
+    c6da9f9a0839        bitsensor/elastalert:3.0.0-beta.0                     "npm start"              5 minutes ago       Up 5 minutes (healthy)   0.0.0.0:3030->3030/tcp, 0.0.0.0:3333->3333/tcp   elastalert
+    748f0caecbd1        docker.elastic.co/kibana/kibana:7.5.2                 "/usr/local/bin/dumb…"   5 minutes ago       Up 5 minutes (healthy)   0.0.0.0:5601->5601/tcp                           kibana
+    5a9d9f34faf3        docker.elastic.co/elasticsearch/elasticsearch:7.5.2   "/usr/local/bin/dock…"   5 minutes ago       Up 5 minutes (healthy)   0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   elasticsearch
