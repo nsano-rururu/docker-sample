@@ -1,0 +1,63 @@
+version: "3.7"
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - ES_JAVA_OPTS=-Xms128m -Xmx256m
+      - discovery.type=single-node
+    restart: always
+    volumes:
+      - ./es/data:/usr/share/elasticsearch/data
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    healthcheck:
+        test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]
+        interval: 30s
+        timeout: 15s
+        retries: 3
+        start_period: 180s
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.5.2
+    command: sh -c '/usr/share/kibana/bin/kibana-plugin list | grep elastalert-kibana-plugin@1.1.0; result=`echo $$?`; if [ $$result = 1 ]; then  /usr/share/kibana/bin/kibana-plugin install file:///usr/share/kibana/work/elastalert-kibana-plugin-1.1.0-7.5.2.zip && exec /usr/local/bin/kibana-docker; else exec /usr/local/bin/kibana-docker; fi'
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    restart: always
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./kibana/plugin:/usr/share/kibana/work
+    healthcheck:
+        test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
+        interval: 30s
+        timeout: 15s
+        retries: 3
+        start_period: 200s
+
+  elastalert:
+    container_name: elastalert
+    image: bitsensor/elastalert:3.0.0-beta.0
+    ports:
+      - 3030:3030
+      - 3333:3333
+    depends_on:
+      - elasticsearch
+      - kibana
+    restart: always
+    volumes:
+      - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml
+      - ./elastalert/config/elastalert-test.yaml:/opt/elastalert/config-test.yaml
+      - ./elastalert/config/config.json:/opt/elastalert-server/config/config.json
+      - ./elastalert/rules:/opt/elastalert/rules
+      - ./elastalert/rule_templates:/opt/elastalert/rule_templates
+    healthcheck:
+        test: ["CMD-SHELL", "curl -f http://localhost:3030 || exit 1"]
+        interval: 30s
+        timeout: 15s
+        retries: 3
+        start_period: 200s
