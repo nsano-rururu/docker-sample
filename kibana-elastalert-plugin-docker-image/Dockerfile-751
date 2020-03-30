@@ -1,0 +1,28 @@
+FROM docker.elastic.co/kibana/kibana:7.5.1 AS builder
+
+USER root
+
+RUN yum install -y \
+    zip \
+    unzip && \
+    rm -rf /var/cache/yum/* && \
+    yum clean all
+
+ADD https://github.com/bitsensor/elastalert-kibana-plugin/releases/download/1.1.0/elastalert-kibana-plugin-1.1.0-7.5.0.zip /tmp/elastalert-kibana-plugin.zip
+
+RUN cd /tmp && \
+    unzip elastalert-kibana-plugin.zip kibana/elastalert-kibana-plugin/package.json && \
+    sed -i "s/7\.5\.0/7\.5\.1/g" kibana/elastalert-kibana-plugin/package.json && \
+    zip elastalert-kibana-plugin.zip kibana/elastalert-kibana-plugin/package.json
+
+FROM docker.elastic.co/kibana/kibana:7.5.1
+
+USER root
+
+COPY --from=builder /tmp/elastalert-kibana-plugin.zip /tmp/elastalert-kibana-plugin.zip
+
+RUN cd /tmp && \
+    /usr/share/kibana/bin/kibana-plugin install file:///tmp/elastalert-kibana-plugin.zip --allow-root && \
+    rm -f /tmp/elastalert-kibana-plugin.zip
+
+USER kibana
